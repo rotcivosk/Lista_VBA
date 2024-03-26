@@ -1,8 +1,9 @@
 Sub Cancelar_Blanket()
     
+    dim user as string, senha as string
     Dim texto As String
     Call Abrir_Chrome("http://sahdamvpjde009.sa.mds.honda.com:71/jde/E1Menu.maf?jdeLoginAction=LOGOUT&RENDER_MAFLET=E1Menu")
-    Call Login_jde("SB048948", "Compras@98")
+    Call Login_jde(user, senha)
     
     
     

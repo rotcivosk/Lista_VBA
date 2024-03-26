@@ -6,7 +6,8 @@ Sub Abrir_SAP()
     'Setar os Iniciais
     Set SapGuiAuto = GetObject("SAPGUI")
     Set Applic = SapGuiAuto.GetScriptingEngine
-    
+
+' Comentário
     If Applic.Connections.Count() > 0 Then 'Checa se tem algum SAP em aberto
         Set Connection = Applic.Children(0)
         Set session = Connection.Children(0) 'Declara a Session pública como o SAP em aberto

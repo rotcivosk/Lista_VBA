@@ -15,3 +15,25 @@ Sub exportar_clipboardSAP(Is_tabela As Boolean)
     End With
     
 End Sub
+
+Sub export_Formatar_PlanilhaSAP()
+        
+        
+        Range(Range("A1"), ActiveCell.SpecialCells(xlLastCell)).ClearContents
+        Range("A1").PasteSpecial
+        Application.CutCopyMode = False
+        With Columns("A:A")
+            .TextToColumns Destination:=Range("A1"), DataType:=xlDelimited, TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=False, Semicolon:=False, Comma:=False, Space:=False, Other:=True, OtherChar:="|", TrailingMinusNumbers:=True
+            .Delete Shift:=xlToLeft
+        
+        Rows("1:3").Delete Shift:=xlUp
+        Rows("2:2").Delete Shift:=xlUp
+        End With
+        
+        Columns("A:A").Select
+        With Range(Selection, Selection.End(xlToRight))
+            .EntireColumn.AutoFit
+            .NumberFormat = "General"
+        End With
+        
+End Sub

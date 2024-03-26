@@ -2,7 +2,7 @@ Sub Cancelar_InfoRecord()
 '
 ' Cancelamento de Inforecord nas transações ME15 e ME01
 '
-Abrir_SAP
+call Abrir_SAP
 
     ' Selecionar a lista a ser cancelada
     Dim lista As Range

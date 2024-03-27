@@ -30,14 +30,6 @@ Sub emitir_pedidos()
     Dim ident As Integer
     ident = 0
 
-
-
-
-
-
-
-
-
     
 End Sub
 

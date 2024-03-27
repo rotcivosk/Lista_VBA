@@ -7,6 +7,7 @@ sub criar_cotacao()
     data_f = Range("G9").Value
     iva = "S1"
     
+    ' Range a ser trabalhado
     If Range("B22") = "" Then
         Set range_valores = Range("B21")
     Else
@@ -14,17 +15,13 @@ sub criar_cotacao()
     End If
     range_valores.Copy
 
-        'Variáveis Usadaas:
-        'Número de Requisições
-        'data_i, data_f, fornecedor, range_valores, iva, cotacao
-
     With session
 
-        'Abre ME57
+        ' Abre transação ME57
         .findById("wnd[0]/tbar[0]/okcd").Text = "me57"
         .findById("wnd[0]").sendVKey 0
         
-        'Filtros
+        ' SelecionaFiltros
         
         .findById("wnd[0]/usr/btn%_BA_BANFN_%_APP_%-VALU_PUSH").press
         .findById("wnd[1]/tbar[0]/btn[24]").press
@@ -117,8 +114,5 @@ sub criar_cotacao()
     
     'Número da Cotação
     Range("G6").Value = session.findById("wnd[0]/usr/ctxtRM06E-ANFNR").Text
-    
-
-
 
 end sub

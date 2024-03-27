@@ -4,7 +4,7 @@ Sub emitir_pedidos()
    
    call Abrir_SAP
 
-    'Variáveis importadas da tabela
+    ' Variáveis importadas da tabela
     Dim fornecedor As Double, requisicao As Double, cotacao As Double
     Dim data_i As String, data_f As String, iva As String, texto_padrao As String
     requisicao = Range("d2").Value
@@ -15,23 +15,21 @@ Sub emitir_pedidos()
     iva = "S1"
     
     
-    'Variáveis de Anexos
+    ' Variáveis de Anexos
     Dim caminho_vbs As String, caminho_anexos As String
     caminho_anexos = "D:\Users\sb048948\OneDrive - Honda\Documentos\SAP\SAP GUI\"
     caminho_vbs = "D:\Users\sb048948\Downloads\Emitir_pedidos\"
     
-    'Nomes
+    ' Nomes
     Dim proposta As String
     proposta = Range("d41").Value
 
-    'Seleciona o range que vai trabalhar e o range de anexos
+    ' Seleciona o range que vai trabalhar e o range de anexos
     If Range("F41") = "" Then
         Set range_anexos = Range("F40")
     Else
         Set range_anexos = Range(Range("F40"), Range("F40").End(xlDown))
     End If
-    
-    
     
     If Range("B22") = "" Then
         Set range_valores = Range("B21")
@@ -39,13 +37,9 @@ Sub emitir_pedidos()
         Set range_valores = Range(Range("B21"), Range("B21").End(xlDown))
     End If
     range_valores.Copy
-    'Identador
+    ' Identador
     Dim ident As Integer
     ident = 0
-
-
-
-
 
 
 
@@ -244,52 +238,4 @@ Sub emitir_pedidos()
        
     
 End Sub
-Sub Adicionar_anexos_da_lista()
-    
-    'Variáveis de Anexos
-    Dim caminho_vbs As String, caminho_anexos As String
-    caminho_anexos = "D:\Users\sb048948\OneDrive - Honda\Documentos\SAP\SAP GUI\"
-    caminho_vbs = "D:\Users\sb048948\Downloads\Emitir_pedidos\"
-
-    'Abrir o SAP
-    Dim Applic, Connection, SapGuiAuto
-    Set SapGuiAuto = GetObject("SAPGUI")
-    Set Applic = SapGuiAuto.GetScriptingEngine
-    Set Connection = Applic.Children(0)
-    Set session = Connection.Children(0) 'Declara a Session pública como o SAP em aberto
-
-    'Seleciona o range que vai trabalhar e o range de anexos
-    If Range("F41") = "" Then
-        Set range_anexos = Range("F40")
-    Else
-        Set range_anexos = Range(Range("F40"), Range("F40").End(xlDown))
-    End If
-
-    Dim temp As Boolean
-    
-
-    '***___CRIAR_ANEXOS___***
-    For Each cell In range_anexos
-        If cell.Offset(0, 1).Value = "Contrato" Then temp = True Else temp = False
-        Call adicionar_anexos(caminho_anexos, caminho_vbs, cell.Value, temp, False)
-    Next
-
-End Sub
-
-Function checar_saplmegui()
-    
-    Dim nome_comp As String
-            
-    Set user_megui = session.findById("wnd[0]/usr")
-    i = 0
-    For i = 0 To user_megui.Children.Count - 1
-        nome_comp = user_megui.Children(CInt(i)).Name
-        If Left(nome_comp, 15) = "SUB0:SAPLMEGUI:" Then
-            Exit For
-        End If
-    Next
-    
-    checar_saplmegui = Right(nome_comp, 4)
-    
-End Function
 

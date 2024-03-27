@@ -1,16 +1,8 @@
-Public session
-
 Sub emitir_pedidos()
 
     '***_____BASE____****
    
-   
-   'Abrir o SAP
-    Dim Applic, Connection, SapGuiAuto
-    Set SapGuiAuto = GetObject("SAPGUI")
-    Set Applic = SapGuiAuto.GetScriptingEngine
-    Set Connection = Applic.Children(0)
-    Set session = Connection.Children(0) 'Declara a Session pública como o SAP em aberto
+   call Abrir_SAP
 
     'Variáveis importadas da tabela
     Dim fornecedor As Double, requisicao As Double, cotacao As Double

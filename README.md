@@ -17,6 +17,7 @@ Este módulo surgiu da necessidade de automatizar tarefas devido ao alto volume 
 
 Este projeto expande o escopo do anterior, automatizando também processos adjacentes, como a emissão de pedidos, e o envio desses pedidos em formatos PDF e por e-mail. O foco está na ampliação do conhecimento previamente adquirido e no refinamento das metodologias existentes.
 
+# Conclusão
 
 Cada projeto visa não apenas à automação de tarefas, mas também a criativadade necessária para solucionar cada processo. Por exemplo: 
 - Processos de "Export PDF", "Adicionar Anexos" que contenham pop-ups do windows, estes pop-ups interrompem a execução de códigos VBA

@@ -6,9 +6,9 @@ Function esperar_carregar(texto As String) As Boolean
         Application.Wait (Now + TimeValue("0:00:01"))
     Loop Until titulo_pag = texto Or n > 10
 
-    wait_load = False
+    esperar_carregar = False
     If n > 9 Then
 '        MsgBox ("Deu BO")
-        wait_load = True
+        esperar_carregar = True
     End If
 End Function

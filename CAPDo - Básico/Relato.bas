@@ -13,11 +13,10 @@ Sub Parte_1_SAP_EKPO_ME5A()
 'ekpo
     
     Sheets("F - EKPO").Select
-    lekpo = Range("A" & Rows.Count).End(xlUp).Row
     Columns("A:A").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
-    Range("A2:A" & lekpo).FormulaR1C1 = "=RC[8]&RC[9]"
+    Range("A2:A" & Range("A" & Rows.Count).End(xlUp).Row).FormulaR1C1 = "=RC[8]&RC[9]"
     Columns("B:B").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
-    Range("B2:B" & lekpo).FormulaR1C1 = "=RC[1]&RC[2]"
+    Range("B2:B" & Range("A" & Rows.Count).End(xlUp).Row).FormulaR1C1 = "=RC[1]&RC[2]"
    
 'me5a
     

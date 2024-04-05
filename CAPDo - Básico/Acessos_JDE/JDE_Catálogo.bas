@@ -1,40 +1,43 @@
-Attribute VB_Name = "Importar_JDE"
+Public user As String, senha As String
+Sub testando()
 
-Sub Importar_Catalogo_JDE()
+     user = "Sb048948"
+     senha = "Compras@98"
 
-    
-    Dim fornecedor As Double
+     Call Importar_Catalogo_JDE("05/04/2024")
+     Call Importar_Follow_JDE("27/03/2024", "05/04/2024")
+
+
+End Sub
+
+Sub Importar_Catalogo_JDE(data_input As String)
    
     Call Abrir_Chrome("http://sahdamvpjde009.sa.mds.honda.com:71/jde/E1Menu.maf?jdeLoginAction=LOGOUT&RENDER_MAFLET=E1Menu")
     Call Login_jde(user, senha)
+    Call Abrir_tela_fav("Manutencao Catalogo de Precos")
     
-    '----CATÁLOGO----
-    call Abrir_tela_fav("Manutencao Catalogo de Precos")
+    Dim dt_ini_min As String
+    dt_ini_min = " > " & data_input
     
-    dim dt_ini_min as string
-    dt_ini_min = ">" & dt_ini
-    Call alterar_campo("qbe0_1.8", dt_ini_min, "Name") 
-    call alterar_campo("C026", "DIHV*", "ID")
-    driver.FindElementById("hc_Find").click
+    Call alterar_campo("qbe0_1.8", dt_ini_min, "Name")
+    Call alterar_campo("C0_26", "DIVH*", "ID")
+    driver.FindElementById("hc_Find").Click
+    Call wait_loading_page
 
     Call carregar_Exportar_JDE
     Application.Wait (Now + TimeValue("0:00:07"))
 
     ThisWorkbook.Activate
-    Sheets("Catálogo").Activate
-    Call pull_Book1xls
+    Sheets("Catalogo").Activate
+    'Call pull_Book1xls
 
     Call fechar_Chrome
 
     End Sub
-
-' Importar a planilha do Catálogo
+' Importar a planilha do CatÃ¡logo
 
 Function Importar_Follow_JDE(dt_ini As String, dt_fin As String)
     
-    Dim user As String, senha As String, i As Integer
-    'Call limparPlan("Pedidos emitidos JDE")
-    '---TELA DE FOLLOW----
     Call Abrir_Chrome("http://sahdamvpjde009.sa.mds.honda.com:71/jde/E1Menu.maf?jdeLoginAction=LOGOUT&RENDER_MAFLET=E1Menu")
     Call Login_jde(user, senha)
      
@@ -44,17 +47,17 @@ Function Importar_Follow_JDE(dt_ini As String, dt_fin As String)
      filial = Array("05001", "10001", "05998", "10998", "05001", "10001", "05001", "10001", "05001", "10001")
 
     ' Abrir tela de follow
-    call Abrir_tela_fav("Tela de Follow Pedidos Improdutivos")    
+    Call Abrir_tela_fav("Tela de Follow Pedidos Improdutivos")
 
 
     For i = 0 To 9
         Call alterar_campo("C0_20", CStr(tip_ped(i)), "ID") ' OP, OL, OM, OS
-        Call alterar_campo("C0_26", CStr(filial(i)), "ID")' 1 - 05001, 2 - 05998, 3 - 10001, 4 - 10998
+        Call alterar_campo("C0_26", CStr(filial(i)), "ID") ' 1 - 05001, 2 - 05998, 3 - 10001, 4 - 10998
         Call alterar_campo("C0_231", dt_ini, "ID") '
         Call alterar_campo("C0_233", dt_fin, "ID")
         driver.FindElementById("hc_Find").Click
         Call carregar_Exportar_JDE
-        call copiar_Temp_para_Pedidos
+        Call copiar_Temp_para_Pedidos
     Next
     
     Call fechar_Chrome

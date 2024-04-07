@@ -85,7 +85,7 @@
 	- Valor Bruto (Montante)
 	- Tipo de Item
 	Criar coluna mesclando Cond. Doc, Linha e Tipo de Item
-	Copiar os Númesb017074ros de Reg Cond para a planilha Temp
+	Copiar os Números de Reg Cond para a planilha Temp
 
 9 - TEMP
 	Remover duplicatas

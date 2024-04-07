@@ -1,0 +1,147 @@
+
+Sub Pedidos_SAP()
+'
+' Pedidos Macro
+'
+
+'
+    'Organizar Formatação
+    
+    Sheets("ME2N").Activate
+    Application.CutCopyMode = False
+    Columns("K:L").Cut
+    Columns("F:F").Insert Shift:=xlToRight
+    Columns("L:L").Cut
+    Columns("H:H").Insert Shift:=xlToRight
+    Columns("I:I").Insert Shift:=xlToRight
+    Columns("H:H").TextToColumns Destination:=Range("H1"), DataType:=xlFixedWidth, OtherChar:="|", FieldInfo:=Array(Array(0, 1), Array(11, 1)), TrailingMinusNumbers:=True
+    
+    Columns("K:K").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    Range("K1").FormulaR1C1 = "Comprador"
+    Range("K2").FormulaR1C1 = "=VLOOKUP(RC[-10],EKKO!C[-10]:C[-7],4,FALSE)"
+    
+    Columns("L:L").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    Range("L1").FormulaR1C1 = "Tipo do Documento"
+    Columns("M:M").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    Range("M1").FormulaR1C1 = "Aprov Req"
+    Range("M2").FormulaR1C1 = "=VLOOKUP(RC[-10],CDHDR!C[-11]:C[1],13,FALSE)"
+    Columns("P:P").Cut
+    Columns("N:N").Insert Shift:=xlToRight
+    Columns("N:N").Replace What:=".", Replacement:="/", LookAt:=xlPart, SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, ReplaceFormat:=False, FormulaVersion:=xlReplaceFormula2
+    Range("P:R,T:U,V:AI").Delete Shift:=xlToLeft
+    Range("Q2").FormulaR1C1 = "=VLOOKUP(RC[-5],Carteiras!C[-11]:C[-8],4,FALSE)"
+    Range("R2").FormulaR1C1 = "=IF(NETWORKDAYS(RC[-5],RC[-4])>RC[-1],""Fora do Prazo"",""Dentro do Prazo"")"
+
+
+    Range("A:F,H:H,J:K").Replace What:=" ", Replacement:="", LookAt:=xlPart, SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, ReplaceFormat:=False, FormulaVersion:=xlReplaceFormula2
+
+    Range("K2:M2").AutoFill Destination:=Range("K2:M" & Range("A" & Rows.Count).End(xlUp).Row)
+    Range("Q2:R2").AutoFill Destination:=Range("Q2:R" & Range("A" & Rows.Count).End(xlUp).Row)
+
+    'Definir tipo
+    
+    
+    For Each Cell In Range(Range("A2"), Range("A2").End(xlDown))
+        If Cell.Offset(0, 4) <> "" Then
+            Cell.Offset(0, 11).FormulaR1C1 = "Material Catálogado"
+        ElseIf Cell.Offset(0, 5) = "" Then
+            If Cell.Offset(0, 14) = "A" Then
+                Cell.Offset(0, 11).FormulaR1C1 = "Serviços Spot (Invest.)"
+            Else
+                Cell.Offset(0, 11).FormulaR1C1 = "Serviços Spot (Desp)"
+            End If
+        Else
+            If Cell.Offset(0, 14) = "A" Then
+                Cell.Offset(0, 11).FormulaR1C1 = "Investimento (Gerais)"
+            Else
+                Cell.Offset(0, 11).FormulaR1C1 = "Material SPOT"
+            End If
+        End If
+    Next
+    
+    
+End Sub
+Sub Pedidos_JDE()
+    
+    Sheets("Pedidos emitidos JDE").Activate
+    
+    With Range(Selection, Selection.End(xlToRight))
+        .EntireColumn.AutoFit
+        .NumberFormat = "General"
+    End With
+    
+    Columns("E:F").Cut
+    Columns("A:A").Insert Shift:=xlToRight
+    Columns("C:E").Insert Shift:=xlToRight
+    Application.CutCopyMode = False
+    Range("C2").FormulaR1C1 = "=IF(RC[3]="""",RC[5],RC[3])"
+    Range("D2").FormulaR1C1 = "=IF(RC[3]="""",RC[5],RC[3])"
+    Range("E2").FormulaR1C1 = "=IF(RC[1]="""",""Catálogo"","""")"
+    
+    Range("C2:E2").AutoFill Destination:=Range("C2:E" & Range("A" & Rows.Count).End(xlUp).Row)
+
+    With Range(Range("C2:E2"), Range("C2:E2").End(xlDown))
+        .Copy
+        .PasteSpecial Paste:=xlPasteValuesAndNumberFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+    End With
+    
+    Range("F:M,O:P,X:AZ").Delete Shift:=xlToLeft
+
+    Columns("j:K").Cut
+    Columns("F:F").Insert Shift:=xlToRight
+    Columns("L:M").Cut
+    Columns("H:H").Insert Shift:=xlToRight
+    Columns("L:L").Cut
+    Columns("K:K").Insert Shift:=xlToRight
+    Columns("L:L").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    
+    Range("L1").FormulaR1C1 = "tipo"
+    Columns("M:M").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+
+    Range("M2").FormulaR1C1 = "=VLOOKUP(RC[-10],'REQ APROV'!C[-11]:C[-3],9,FALSE)"
+    Range("P1").FormulaR1C1 = "Centro"
+    Range("Q2").FormulaR1C1 = "=VLOOKUP(RC[-5],Carteiras!C[-12]:C[-8],5,FALSE)"
+    Range("R2").FormulaR1C1 = "=IF(NETWORKDAYS(RC[-5],RC[-4])>RC[-1],""Fora do Prazo"",""Dentro do Prazo"")"
+
+    Range("M2").AutoFill Destination:=Range("M2:M" & Range("A" & Rows.Count).End(xlUp).Row), Type:=xlFillDefault
+    Range("Q2:R2").AutoFill Destination:=Range("Q2:R" & Range("A" & Rows.Count).End(xlUp).Row), Type:=xlFillDefault
+
+    Columns("A:A").Select
+    With Range(Selection, Selection.End(xlToRight))
+        .EntireColumn.AutoFit
+        .NumberFormat = "General"
+    End With
+    
+    Columns("P:P").Cut
+    Columns("O:O").Insert Shift:=xlToRight
+    Dim tipo_Req, orOy As String
+    Dim textoDesc As String
+    Dim cod_JDE As String * 1
+    Dim cod_JDE_num  As String
+    For Each Cell In Range(Range("A2"), Range("A2").End(xlDown))
+        
+        textoDesc = Cell.Offset(0, 8).Value
+        orOy = Cell.Offset(0, 9).Value
+        cod_JDE = Left$(Cell.Offset(0, 7), 1)
+        cod_JDE_num = Right$(Left$(Cell.Offset(0, 7), 2), 1)
+        If cod_JDE = "Q" Then
+            If orOy = "OM" Then
+                tipo_Req = "Equipamentos Importados"
+            Else
+                tipo_Req = "Investimentos Gerais"
+            End If
+        Else
+            If Cell.Offset(0, 4) <> "" Then
+                tipo_Req = "Catálogo OPC"
+            ElseIf orOy = "OL" Then
+                tipo_Req = "Despesa Importada"
+            ElseIf orOy = "OS" Then
+                tipo_Req = "Serviços Gerais"
+            Else
+                tipo_Req = checar_codJDE(cod_JDE, cod_JDE_num, textoDesc)
+            End If
+        End If
+        Cell.Offset(0, 11).FormulaR1C1 = tipo_Req
+
+    Next
+End Sub

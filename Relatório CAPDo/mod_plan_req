@@ -1,0 +1,459 @@
+Sub organizar_SE16N()
+    
+    'Organizar datas
+    Sheets("CDHDR").Activate
+    Range("N2").FormulaR1C1 = "=DATE(RIGHT(RC[-9],4),MID(RC[-9],4,2),LEFT(RC[-9],2))"
+    Range("N2").AutoFill Destination:=Range("N2:N" & Range("A" & Rows.Count).End(xlUp).Row)
+    
+    Sheets("REQ APROV").Activate
+    Range("J2").FormulaR1C1 = "=DATE(LEFT(RC[-3],4),MID(RC[-3],5,2),RIGHT(RC[-3],2))"
+    Range("J2").AutoFill Destination:=Range("J2:J" & Range("A" & Rows.Count).End(xlUp).Row)
+
+    'Checar se tem Reginfo
+    Sheets("EINE").Activate
+    Range(Range("F1"), ActiveCell.SpecialCells(xlLastCell)).ClearContents
+    Range("F2").FormulaR1C1 = "=VLOOKUP(RC[-5],EINA!C[-5]:C[-4],2,FALSE)"
+    Range("G2").FormulaR1C1 = "=VLOOKUP(RC[-6],EINA!C[-6]:C[-3],4,FALSE)"
+    Range("H2").FormulaR1C1 = "=VLOOKUP(RC[-7],EINA!C[-7]:C[-3],5,FALSE)"
+    Range("G2").NumberFormat = "General"
+    Range("F2").NumberFormat = "General"
+    Range("F2:H2").AutoFill Destination:=Range("F2:H" & Range("A" & Rows.Count).End(xlUp).Row)
+
+    Columns("A:A").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    Range("A2").FormulaR1C1 = "=RC[6]&RC[4]"
+    Range("A2").AutoFill Destination:=Range("A2:A" & Range("B" & Rows.Count).End(xlUp).Row)
+    
+    With Columns("A:I")
+        .Copy
+        .PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+        .Replace What:=" ", Replacement:="", LookAt:=xlPart, SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, ReplaceFormat:=False, FormulaVersion:=xlReplaceFormula2
+    End With
+    
+    
+End Sub
+
+Sub organizar_ME5A()
+
+    Sheets("ME5A").Activate
+    Range("A:A,Q:U,W:W").Delete Shift:=xlToLeft
+    Range("A:E,G:P").Replace What:=" ", Replacement:="", LookAt:=xlPart, SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, ReplaceFormat:=False, FormulaVersion:=xlReplaceFormula2
+    
+   
+    Range("Q2").FormulaR1C1 = "=IF(RC[-12]="""","""",IFERROR(VLOOKUP(RC[-12]&RC[-3],EINE!C[-16]:C[-11],2,FALSE),""""))"
+    Range("R2").FormulaR1C1 = "=IF(RC[-13]="""","""",IFERROR(VLOOKUP(RC[-13]&RC[-4],EINE!C[-17]:C[-12],8,FALSE),""""))"
+    Range("S2").FormulaR1C1 = "=IF(RC[-14]="""","""",IFERROR(VLOOKUP(RC[-14]&RC[-5],EINE!C[-18]:C[-13],6,FALSE),""""))"
+    Range("T2").FormulaR1C1 = "=IF(RC[-15]="""","""",IFERROR(VLOOKUP(RC[-15]&RC[-6],EINE!C[-19]:C[-14],9,FALSE),""""))"
+
+    
+    Range("U2").FormulaR1C1 = "=SUMIF(C[-20],RC[-20],C[-8])"
+    Range("W2").FormulaR1C1 = "=VLOOKUP(RC[-1],Carteiras!C[-18]:C[-17],2,FALSE)"
+    Range("X2").FormulaR1C1 = "=VLOOKUP(RC[-2],Carteiras!C[-19]:C[-16],4,FALSE)"
+    Range("Y2").FormulaR1C1 = "=VLOOKUP(RC[-24],CDHDR!C[-23]:C[-11],13,FALSE)"
+    Range("Z2").FormulaR1C1 = "=NETWORKDAYS(RC[-1],TODAY())-1"
+    Range("AA2").FormulaR1C1 = "=IF(RC[-1]>VLOOKUP(RC[-5],Carteiras!C[-22]:C[-18],5,FALSE),""Fora do Prazo"",""Dentro do Prazo"")"
+    
+    
+    Range("Q2:AA2").Select
+    Selection.AutoFill Destination:=Range("Q2:AA" & Range("A" & Rows.Count).End(xlUp).Row)
+
+    With Columns("Q:T")
+        .Copy
+        .PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+        .Replace What:=" ", Replacement:="", LookAt:=xlPart, SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, ReplaceFormat:=False, FormulaVersion:=xlReplaceFormula2
+    End With
+    Application.CutCopyMode = False
+        
+    Range("AB2").FormulaR1C1 = "=VALUE(RC[-15])"
+    Range("AB2").AutoFill Destination:=Range("AB2:AB" & Range("A" & Rows.Count).End(xlUp).Row)
+
+    Range("AB2:AB" & Range("A" & Rows.Count).End(xlUp).Row).Copy
+    Range("M2").PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+    Application.CutCopyMode = False
+    
+    Columns("AB:AB").Delete Shift:=xlToLeft
+
+    'Cabeçalhos
+    Range("Q1").FormulaR1C1 = "Reginfo"
+    Range("R1").FormulaR1C1 = "Fornecedor"
+    Range("S1").FormulaR1C1 = "RegInfo Canc."
+    Range("T1").FormulaR1C1 = "Linha Canc"
+    Range("U1").FormulaR1C1 = "Valor Total"
+    Range("V1").FormulaR1C1 = "Tipo de Requisição"
+    Range("W1").FormulaR1C1 = "Linha Req"
+    Range("X1").FormulaR1C1 = "Comprador"
+    Range("Y1").FormulaR1C1 = "Data de Aprov"
+    Range("Z1").FormulaR1C1 = "Lead Time"
+    Range("AA1").FormulaR1C1 = "Status"
+
+    Call definir_tipo_SAP
+    
+
+
+End Sub
+
+Sub organizar_JDE()
+
+
+    'Pode ser beeem mais organizado
+    Sheets("Requisições no JDE").Activate
+    Columns("A:AC").NumberFormat = "General"
+    Range("B2").FormulaR1C1 = "=IF(RC[4]=""OQ"",VALUE(RC[19]),VALUE(RC[5]))"
+    Range("C2").FormulaR1C1 = "=IF(RC[3]=""OQ"",VALUE(RC[26]),VALUE(RC[20]))"
+    Columns("D:D").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    Application.CutCopyMode = False
+    Range("D2").FormulaR1C1 = "=IF(RC[3]=""OQ"",RC[17],RC[3])"
+    Columns("E:E").Insert Shift:=xlToRight
+    Columns("M:N").Cut
+    Columns("F:F").Insert Shift:=xlToRight
+    Columns("S:S").Cut
+    Columns("H:H").Insert Shift:=xlToRight
+    Columns("I:I").Insert Shift:=xlToRight
+    Columns("U:U").Cut
+    Columns("J:J").Insert Shift:=xlToRight
+    Columns("Y:Y").Cut
+    Columns("K:K").Insert Shift:=xlToRight
+    Columns("L:L").Insert Shift:=xlToRight
+    Columns("L:L").Insert Shift:=xlToRight
+    Columns("Y:Y").Cut
+    Columns("N:N").Insert Shift:=xlToRight
+    Columns("A:A").Cut
+    Columns("O:O").Insert Shift:=xlToRight
+    Columns("X:X").Cut
+    Columns("O:O").Insert Shift:=xlToRight
+    Columns("P:P").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    Columns("W:W").Cut
+    Columns("Q:Q").Insert Shift:=xlToRight
+    Columns("W:W").Cut
+    Columns("Q:Q").Insert Shift:=xlToRight
+    Columns("S:S").Insert Shift:=xlToRight
+    Columns("S:S").Insert Shift:=xlToRight
+    Columns("U:U").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    Application.CutCopyMode = False
+    Range("U2").FormulaR1C1 = "=SUMIF(C[-20],RC[-20],C[-8])"
+    Columns("V:V").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    Range("V1").FormulaR1C1 = "TIPO"
+    Columns("W:W").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    Columns("X:X").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    Range("X2").FormulaR1C1 = "=VLOOKUP(RC[-23],'REQ APROV'!C[-22]:C[-14],9,FALSE)"
+    Range("X2").NumberFormat = "m/d/yyyy"
+    Columns("Y:Y").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    Range("Y2").FormulaR1C1 = "=NETWORKDAYS(RC[-1],TODAY())"
+    Range("Y2").NumberFormat = "0"
+    Columns("Z:Z").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    Range("Z2").FormulaR1C1 = "=IF(RC[-1]>VLOOKUP(RC[-4],Carteiras!C[-21]:C[-17],5,FALSE),""Fora do Prazo"",""Dentro do Prazo"")"
+    Range("Q2").FormulaR1C1 = "=IFERROR(VLOOKUP(RC[-12],Catálogo!C[-14],1,FALSE),"""")"
+    Columns("X:X").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    Range("X2").FormulaR1C1 = "=VLOOKUP(RC[-2],Carteiras!C[-19]:C[-16],4,FALSE)"
+               
+    Range("A2:C2").AutoFill Destination:=Range("A2:C" & Range("E" & Rows.Count).End(xlUp).Row)
+    Range("U2:AA2").AutoFill Destination:=Range("U2:AA" & Range("E" & Rows.Count).End(xlUp).Row)
+    Range("Q2").AutoFill Destination:=Range("Q2:Q" & Range("E" & Rows.Count).End(xlUp).Row)
+    Sheets("ME5A").Activate
+
+    Range(Range("A1"), Range("A1").End(xlToRight)).Copy
+    Sheets("Requisições no JDE").Activate
+    Range("A1").Select
+    ActiveSheet.Paste
+    
+    
+    With Range(Range("A2:C2"), Range("A2:C2").End(xlDown))
+        .Copy
+        .PasteSpecial Paste:=xlPasteValuesAndNumberFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+    End With
+    
+    Range("W2").FormulaR1C1 = "=VLOOKUP(RC[-1],Carteiras!C[-18]:C[-17],2,FALSE)"
+    Range("W2").AutoFill Destination:=Range("W2:W" & Range("A" & Rows.Count).End(xlUp).Row)
+    
+    Columns("AB:AS").ClearContents
+    Application.CutCopyMode = False
+    Call checar_tipo_JDE
+
+End Sub
+
+Sub definir_tipo_SAP()
+
+    Dim grp_merc, tipo_Req, grp_merc_num, textoDesc As String
+    Dim Islocal As Boolean
+    Sheets("ME5A").Activate
+    For Each Cell In Range(Range("A2"), Range("A2").End(xlDown))
+        
+        tipo_Req = "Não definido"
+        grp_merc = Left$(Cell.Offset(0, 10), 3)
+        grp_merc_num = Right$(Cell.Offset(0, 10), 2)
+
+        If Right$(Cell.Offset(0, 11), 3) = "LOC" Then Islocal = True Else Islocal = False
+
+        If Cell.Offset(0, 3).Value = "A" Then
+        
+            If Cell.Offset(0, 4).Value = "" Then
+                If Cell.Offset(0, 20).Value < 200000 Then tipo_Req = "Obras até 200k" Else: tipo_Req = "Obras acima de 200k"
+            Else
+                If (Cell.Offset(0, 16).Value = "" Or Cell.Offset(0, 18).Value = "X" Or Cell.Offset(0, 19).Value = "X") And grp_merc = "MAN" Then tipo_Req = "Investimentos Gerais" Else tipo_Req = "Catálogo RegInfo"
+            End If
+        Else:
+            If Cell.Offset(0, 4).Value = "" Then
+                If Left$(Cell.Offset(0, 5), 3) = "CTR" Then
+                    tipo_Req = "Contrato - SAP"
+                Else
+                    tipo_Req = range_valor(Cell.Offset(0, 20).Value)
+                End If
+            Else
+                If (Cell.Offset(0, 16).Value = "" Or Cell.Offset(0, 18).Value = "X" Or Cell.Offset(0, 19).Value = "X") And Left$(Cell.Offset(0, 10), 3) = "MAN" Then
+                    tipo_Req = checar_manut(Right$(Cell.Offset(0, 10), 2))
+                ElseIf (Cell.Offset(0, 16).Value = "" Or Cell.Offset(0, 18).Value = "X" Or Cell.Offset(0, 19).Value = "X") Then
+                    tipo_Req = checar_GrpMerc(Left$(Cell.Offset(0, 10), 3), Right$(Cell.Offset(0, 10), 2), Islocal)
+                Else
+                    tipo_Req = "Catálogo RegInfo"
+                End If
+            End If
+        End If
+        Cell.Offset(0, 21).FormulaR1C1 = tipo_Req
+    Next
+Application.CutCopyMode = False
+End Sub
+
+Function range_valor(valorInput) As String
+    
+    Select Case valorInput
+    Case 0 To 4999
+        range_valor = "Serv SPOT - Range 0 a 5 k"
+    Case 5000 To 49999
+        range_valor = "Serv SPOT - Range 5 a 50k"
+    Case 50000 To 199999
+        range_valor = "Serv SPOT - Range 50 a 200k"
+    Case Else
+        range_valor = "Serv SPOT - Range > 200k"
+    End Select
+
+End Function
+
+Function checar_GrpMerc(mercadoria As String, numeroMerc As String, ehLocal As Boolean) As String
+
+    Select Case mercadoria
+         Case "CON"
+             checar_GrpMerc = "Consumíveis"
+         Case "EMB"
+             checar_GrpMerc = "Embalagens"
+         Case "AUX"
+             If numeroMerc = "02" Then
+                 checar_GrpMerc = "Químicos Auxiliar"
+             Else
+                 checar_GrpMerc = "Auxiliar"
+             End If
+         Case "USI"
+             checar_GrpMerc = "Usinados"
+         Case "ESC"
+             checar_GrpMerc = "Escritório"
+         Case "EPI"
+             checar_GrpMerc = "EPI's e Segurança"
+         Case "UNI"
+             checar_GrpMerc = "Fardamentos"
+         Case "FER"
+             checar_GrpMerc = "Ferramentaria"
+         Case "NUT"
+             checar_GrpMerc = "Alimentação"
+         Case "AMB"
+             checar_GrpMerc = "Medicamentos"
+         Case "DIV"
+             Select Case numeroMerc
+             Case "01"
+                 checar_GrpMerc = "Pesquisa, testes"
+             Case "02" To "03"
+                 If ehLocal Then tipo_Req = "Comissão - Local" Else tipo_Req = "Comissão - Nacional"
+             Case "04"
+                 checar_GrpMerc = "Brindes"
+             Case Else
+                 checar_GrpMerc = "Diversos"
+             End Select
+         Case "LIM"
+             checar_GrpMerc = "Jardinagem"
+         Case "EQU"
+             checar_GrpMerc = "Equip / Disp"
+         Case "BCD"
+             checar_GrpMerc = "Bens de Curta Duração"
+         Case Else
+             checar_GrpMerc = "Deu BO no case do spot"
+     End Select
+End Function
+
+Function checar_manut(mercadoria As Integer)
+
+    Select Case mercadoria
+    Case 11, 17
+        checar_manut = "Lubrificantes, Químicos"
+    Case 15
+        checar_manut = "Peças sob desenho"
+    Case 27
+        checar_manut = "Bombas"
+    Case 6
+        If Islocal Then checar_manut = "Ferramentas Manuais - Locais" Else checar_manut = "Ferramentas Manuais - Nacionais"
+    Case 29
+        If Islocal Then checar_manut = "Automação - Locais" Else checar_manut = "Automação - Nacionais"
+    Case Else
+        If Islocal Then checar_manut = "Manutenção Geral - Local" Else checar_manut = "Manutenção Geral - Nacional"
+    End Select
+
+End Function
+
+Sub checar_tipo_JDE()
+    
+    Sheets("Requisições no JDE").Activate
+    Dim tipo_Req, orOy As String
+    Dim textoDesc As String
+    Dim cod_JDE As String * 1
+    Dim cod_JDE_num  As String
+    
+    For Each Cell In Range(Range("A2"), Range("A2").End(xlDown))
+        
+        textoDesc = Cell.Offset(0, 5).Value
+        orOy = Cell.Offset(0, 2).Value
+        cod_JDE = Left$(Cell.Offset(0, 4), 1)
+        cod_JDE_num = Right$(Left$(Cell.Offset(0, 4), 2), 1)
+        If cod_JDE = "Q" Then
+            If orOy = "OY" Then
+                tipo_Req = "Equipamentos Importados"
+            Else
+                tipo_Req = "Investimentos Gerais"
+            End If
+        Else
+            If Cell.Offset(0, 16) <> "" Then
+                tipo_Req = "Catálogo OPC"
+            ElseIf orOy = "OY" Then
+                tipo_Req = "Despesa Importada"
+            Else
+                tipo_Req = checar_codJDE(cod_JDE, cod_JDE_num, textoDesc)
+            End If
+        End If
+        Cell.Offset(0, 21).FormulaR1C1 = tipo_Req
+    Next
+End Sub
+Function checar_codJDE(codigo As String, numero As String, descricao As String) As String
+
+    Select Case codigo
+    Case "C"
+        Select Case descricao
+        Case "GAS CARBONICO CO2 LIQUIDO", "ARGONIO GAS", "NITROGENIO GAS", "ARGONIO LIQUIDO", "NITROGENIO LIQUIDO", "GAS ARGONIO 5,0 ANALITICO", "GAS STAR GOLD PREMIUM"
+            checar_codJDE = "Gases Industriais"
+        Case "GAS HIDROGENIO H2 5.0 ANALIT.", "OXIGENIO 4.0", "NITROG N2 5.0 ANAL > 99,999%", "HIDROGENIO GASOSO", "OXIGÊNIO LÍQUIDO", "GAS CARBONICO CO2 CILINDRO"
+            checar_codJDE = "Gases Industriais"
+        Case "ACETILENO GAS", "OXIGENIO GAS", "GAS NATURAL"
+            checar_codJDE = "Gases Industriais"
+        Case Else
+            checar_codJDE = "Consumíveis"
+        End Select
+    Case "E"
+        checar_codJDE = "Auxiliar"
+    Case "F"
+        checar_codJDE = "Usinados"
+    Case "G"
+        checar_codJDE = "Escritório"
+    Case "I"
+        checar_codJDE = "EPI's e segurança"
+    Case "J"
+        checar_codJDE = "Fardamento"
+    Case "L"
+        checar_codJDE = "Ferramentaria"
+    Case "M"
+        checar_codJDE = "Alimentação"
+    Case "N"
+        Select Case descricao
+        Case "SUBSIDIO", "FOPAG", "REMEDIO", "MEDICACAO -CONVENIO / BENEFICIO"
+            checar_codJDE = "Benefícios"
+        Case Else
+            checar_codJDE = "Medicamentos"
+        End Select
+    Case "S"
+        checar_codJDE = "Jardinagem"
+    Case "Q"
+        checar_codJDE = "Equip / Disp"
+    Case "K"
+        If numero = 3 Then
+            checar_codJDE = "Manutenção Geral - Nacional"
+        ElseIf descricao = "PECAS" Or descricao = "PARTES PCS MANUT.VEIC NAO TRIB" Then
+            checar_codJDE = "Peças e Manutenção de Frota"
+        Else
+            checar_codJDE = "Manutenção Geral - Local"
+        End If
+    Case "W"
+        checar_codJDE = "Serviços Gerais"
+    End Select
+        
+End Function
+
+Sub mesclar_Reqs()
+
+    Sheets("Requisições").Activate
+    Range(Range("A2"), Range("A2").SpecialCells(xlLastCell)).ClearContents
+    
+    Sheets("ME5A").Activate
+    Range(Range("A2"), Range("A2").SpecialCells(xlLastCell)).Copy
+    
+    Sheets("Requisições").Activate
+    Range("A2").PasteSpecial Paste:=xlPasteValuesAndNumberFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+
+    
+    Sheets("Requisições no JDE").Activate
+    Range(Range("A2"), Range("A2").SpecialCells(xlLastCell)).Copy
+    
+    Sheets("Requisições").Activate
+    Range("A2").End(xlDown).Select
+    Selection.Offset(1, 0).PasteSpecial Paste:=xlPasteValuesAndNumberFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+
+    Range(Range("A1"), Range("A1").End(xlToRight)).Select
+    Range(Selection, Selection.End(xlDown)).Select
+    ActiveWorkbook.Worksheets("Requisições").Sort.SortFields.Clear
+    ActiveWorkbook.Worksheets("Requisições").Sort.SortFields.Add2 Key:=Selection, SortOn:=xlSortOnValues, Order:=xlDescending, DataOption:=xlSortNormal
+    With ActiveWorkbook.Worksheets("Requisições").Sort
+        .SetRange Selection
+        .Header = xlYes
+        .MatchCase = False
+        .Orientation = xlTopToBottom
+        .SortMethod = xlPinYin
+
+    End With
+    
+    Range("AB2").FormulaR1C1 = "=IF(RC[-27]=R[-1]C[-27],""Linha"",""Cabeçalho"")"
+    Range("AB2").AutoFill Destination:=Range("AB2:AB" & Range("E" & Rows.Count).End(xlUp).Row)
+    Columns("AB:AB").Select
+    Selection.Copy
+    Selection.PasteSpecial Paste:=xlPasteValuesAndNumberFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+    Application.CutCopyMode = False
+    
+'xxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+    Sheets("Pedidos").Activate
+    Range(Range("A2"), Range("A2").SpecialCells(xlLastCell)).ClearContents
+    
+    Sheets("ME2N").Activate
+    Range(Range("A2"), Range("A2").SpecialCells(xlLastCell)).Copy
+    
+    Sheets("Pedidos").Activate
+    Range("A2").PasteSpecial Paste:=xlPasteValuesAndNumberFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+
+    
+    Sheets("Pedidos emitidos JDE").Activate
+    Range(Range("A2"), Range("A2").SpecialCells(xlLastCell)).Copy
+    
+    Sheets("Pedidos").Activate
+    Range("A2").End(xlDown).Select
+    Selection.Offset(1, 0).PasteSpecial Paste:=xlPasteValuesAndNumberFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+
+    Range(Range("A1"), Range("A1").End(xlToRight)).Select
+    Range(Selection, Selection.End(xlDown)).Select
+    ActiveWorkbook.Worksheets("Requisições").Sort.SortFields.Clear
+    ActiveWorkbook.Worksheets("Requisições").Sort.SortFields.Add2 Key:=Selection, SortOn:=xlSortOnValues, Order:=xlDescending, DataOption:=xlSortNormal
+    With ActiveWorkbook.Worksheets("Requisições").Sort
+        .SetRange Selection
+        .Header = xlYes
+        .MatchCase = False
+        .Orientation = xlTopToBottom
+        .SortMethod = xlPinYin
+
+    End With
+    Application.CutCopyMode = False
+
+    Range("S2").FormulaR1C1 = "=IF(RC[-4]="""",VLOOKUP(RC[-7],Carteiras!C[-14]:C[-13],2,FALSE),RC[-7])"
+    Range("S2").AutoFill Destination:=Range("S2:S" & Range("E" & Rows.Count).End(xlUp).Row)
+    
+End Sub

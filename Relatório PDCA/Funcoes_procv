@@ -1,0 +1,11 @@
+sub relato_SAP()
+
+    dim matRequisicao
+    Sheets("ME5A").Activate
+    matRequisicao = Range("B2:W" & Range("B" & Rows.Count).End(xlUp).Row).Value   
+
+
+
+    Sheets("teste").Activate
+
+end sub

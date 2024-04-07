@@ -21,22 +21,22 @@ VBA (Visual Basic for Applications)
 
 Este repositório se concentra em projetos elaborados em VBA, exportados e organizados em arquivos .bas, categorizados conforme o processo empresarial ao qual foram aplicados:
 
-  # Relatórios Dinâmicos e Confiáveis
+Relatórios Dinâmicos e Confiáveis
 
 Este módulo é desenvolvido para gerenciar extensas tabelas de dados e realizar numerosos cálculos e definições. 
 O foco neste projeto é a sua capacidade de fortalecer a robustez e confiabilidade dos relatórios gerados, além de automatizar processos de acesso, visando aprimorar a eficiência operacional e a precisão nas entregas.
 
-  # Automatização no Cadastro de Preços
+Automatização no Cadastro de Preços
 
 Representa a automação de um processo sob minha responsabilidade, enfatizando a melhoria contínua e a inovação nas atividades cotidianas. 
 Este módulo surgiu da necessidade de automatizar tarefas devido ao alto volume de trabalho, complexidade das variáveis envolvidas, exigência de precisão e o objetivo de alcançar maior eficiência.
 
 
-  # Emissão de Pedidos
+Emissão de Pedidos
 
 Este projeto expande o escopo do anterior, automatizando também processos adjacentes, como a emissão de pedidos, e o envio desses pedidos em formatos PDF e por e-mail. O foco está na ampliação do conhecimento previamente adquirido e no refinamento das metodologias existentes.
 
-  # Conclusão
+Conclusão
 
 Cada projeto visa não apenas à automação de tarefas, mas também a criativadade necessária para solucionar cada processo. Por exemplo: 
 - Processos de "Export PDF", "Adicionar Anexos" que contenham pop-ups do windows, estes pop-ups interrompem a execução de códigos VBA

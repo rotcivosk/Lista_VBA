@@ -17,8 +17,6 @@ Projetos gerais com base em necessidades e desafios:
 # VBA / SELENIUM / Office
 VBA (Visual Basic for Applications)
 
-# VBA - Visual Basic Advanced
-
 Este repositório se concentra em projetos elaborados em VBA, exportados e organizados em arquivos .bas, categorizados conforme o processo empresarial ao qual foram aplicados:
 
 Relatórios Dinâmicos e Confiáveis

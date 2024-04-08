@@ -1,33 +1,17 @@
 Sub Importar_OPC()
     
-    dim user as string, senha as string
     Dim fornecedor As Double
-    fornecedor = Sheets("Tela Principal").Range("L4").Value
-   
-    Call Abrir_Chrome("http://sahdamvpjde009.sa.mds.honda.com:71/jde/E1Menu.maf?jdeLoginAction=LOGOUT&RENDER_MAFLET=E1Menu")
-    Call Login_jde(user, senha)
-    
-    
-   'Abrir a tela de Catálogos
-    With driver
-        .FindElementById("drop_fav_menus").Click
-        .FindElementByXPath("//div[3]/div/table/tbody/tr/td[4]/table/tbody/tr/td/table/tbody/tr/td/span").Click
-        .FindElementByLinkText("Manutencao Catalogo de Precos").Click
-    End With
+    fornecedor = Range("L4").Value
 
-
-    'Experar carregar e adicionar informações
-    Application.Wait (Now + TimeValue("0:00:08"))
-    With driver
-        .SwitchToFrame 8
-        .FindElementById("C0_26").Clear
-        .FindElementById("C0_26").SendKeys ("DIVH*")
-        .FindElementById("C0_52").Clear
-        .FindElementById("C0_52").SendKeys fornecedor
-        .FindElementByName("qbe0_1.8", timeout = 10000).Clear
-        .FindElementByName("qbe0_1.8").SendKeys Range("C5").Value
-        .FindElementById("hc_Find").Click
-    End With
+    dim user as string, senha as string
+        Call Abrir_Chrome("http://sahdamvpjde009.sa.mds.honda.com:71/jde/E1Menu.maf?jdeLoginAction=LOGOUT&RENDER_MAFLET=E1Menu")
+        Call Login_jde(user, senha)
+        Call Abrir_tela_fav("Consulta Planejamento Compras")
+    ' Abrir o JDE
+    
+    Call alterar_campo("C0_26", "DIVH*", "ID")
+    Call alterar_campo("qbe0_1.8", range("T2").Value, "Name")
+    driver.FindElementById("hc_Find").Click
 
     Call carregar_Exportar_JDE
     Application.Wait (Now + TimeValue("0:00:07"))

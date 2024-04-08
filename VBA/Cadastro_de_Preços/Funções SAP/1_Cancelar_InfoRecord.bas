@@ -29,9 +29,9 @@ Sub Cancelar_InfoRecord()
             case Else
                 msgbox ("Item " & cell.Value & " não foi selecionada a filial para ser cancelada")
             end select
+            cell.Offset(0,3).text = "Cancelado ME15"
         Next
 
-    
     ' Abrir transação ME01
     session.findById("wnd[0]/tbar[0]/okcd").Text = "/nme01"
     session.findById("wnd[0]").sendVKey 0
@@ -48,11 +48,52 @@ Sub Cancelar_InfoRecord()
             case Else
                 msgbox ("Item " & cell.Value & " não foi selecionada a filial para ser cancelada")
             end select
+            cell.Offset(0,3).text = "Cancelado"
+
         Next
 
     session.findById("wnd[0]").sendVKey 3
+    End Sub
 
-End Sub
+Sub Descancelar_RegInfo()
+    '
+    ' Cancelamento de Inforecord nas transações ME15 e ME01
+    '
+    call Abrir_SAP
+
+    ' Selecionar a lista a ser cancelada
+        Dim lista As Range, item_ini as Range
+        Set item_ini = Range("B10")
+        if item_ini.Offset(1,0) = "" Then
+            Set lista = item_ini
+        Else
+            Set lista = Range(item_ini, item_ini.End(xlDown))
+        end if 
+
+        ' Abrir a transação ME15
+        session.findById("wnd[0]/tbar[0]/okcd").Text = "me15"
+        session.findById("wnd[0]").sendVKey 0
+        
+    For Each cell In lista
+        select case cell.Offset(0,2)
+            case "AMBOS"            
+                call alterar_ME15(cell.Value, cell.Offset(0,1).Value, "0212", True)
+                call alterar_ME15(cell.Value, cell.Offset(0,1).Value, "0304", True)
+            case "HDA"
+                call alterar_ME15(cell.Value, cell.Offset(0,1).Value, "0212", True)
+            case "HCA"
+                call alterar_ME15(cell.Value, cell.Offset(0,1).Value, "0304", True)
+            case Else
+                msgbox ("Item " & cell.Value & " não foi selecionada a filial para ser cancelada")
+            end select
+            cell.Offset(0,3).text = "Descancelado"
+        Next
+
+        ' Sair da Transação
+        session.findById("wnd[0]").sendVKey 3
+
+End Sub                                                     
+
 
 function cancelar_me01(material as double, fornecedor as double, centro as text)
         

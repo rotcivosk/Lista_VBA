@@ -1,3 +1,4 @@
+Attribute VB_Name = "M_Importar_OPC"
 Sub Importar_OPC()
     
     Dim fornecedor As Double

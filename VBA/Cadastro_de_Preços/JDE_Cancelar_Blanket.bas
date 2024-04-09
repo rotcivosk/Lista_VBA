@@ -1,3 +1,4 @@
+Attribute VB_Name = "M_6_Cancelar_Blanket"
 Sub Cancelar_Blanket()
     
     dim user as string, senha as string

@@ -1,3 +1,4 @@
+Attribute VB_Name = "M_2_Carga_Reajuste"
 Sub Gerar_carga_reajuste()
         Dim n As Integer
 

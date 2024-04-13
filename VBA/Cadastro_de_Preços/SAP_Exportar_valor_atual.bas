@@ -1,4 +1,4 @@
-Attribute VB_Name = "M_5_Exportar_SAP"
+Attribute VB_Name = "M_SAP_Exportar_valor_atual"
 Sub Atualizar_SAP()
 
     Dim fornecedor As Double

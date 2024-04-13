@@ -1,4 +1,4 @@
-Attribute VB_Name = "M_0_Abrir_SAP"
+Attribute VB_Name = "M_SAP_Abrir_Sap"
 Public session
 Sub Abrir_SAP()
 

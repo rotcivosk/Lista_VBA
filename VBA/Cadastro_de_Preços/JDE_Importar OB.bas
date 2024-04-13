@@ -1,4 +1,4 @@
-Attribute VB_Name = "M_Importar_OB"
+Attribute VB_Name = "M_JDE_Importar OB"
 Sub Importar_OB()
     
     dim user as string, senha as string

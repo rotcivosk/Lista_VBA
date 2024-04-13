@@ -1,4 +1,4 @@
-Attribute VB_Name = "M_2_Carga_Reajuste"
+Attribute VB_Name = "M_SAP_Gerar carga de reajuste"
 Sub Gerar_carga_reajuste()
         Dim n As Integer
 

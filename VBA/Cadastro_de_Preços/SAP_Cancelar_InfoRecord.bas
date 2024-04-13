@@ -1,4 +1,4 @@
-Attribute VB_Name = "M_1_Cancelar_Reginfo"
+Attribute VB_Name = "M_SAP_Cancelar_InfoRecord"
 Sub Cancelar_InfoRecord()
     '
     ' Cancelamento de Inforecord nas transações ME15 e ME01

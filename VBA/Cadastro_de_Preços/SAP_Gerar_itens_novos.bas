@@ -1,4 +1,4 @@
-Attribute VB_Name = "M_3_Carga_Itens_Novos"
+Attribute VB_Name = "M_SAP_Gerar_itens_novos"
 Sub Gerar_cotacao_itens_novos()
     Dim fornecedor As Double, empresa As String, centro As String
         fornecedor = Range("M6").Value

@@ -1,4 +1,4 @@
-Attribute VB_Name = "M_Importar_OPC"
+Attribute VB_Name = "M_JDE_Importar OPC"
 Sub Importar_OPC()
     
     Dim fornecedor As Double

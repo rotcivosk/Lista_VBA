@@ -1,4 +1,4 @@
-Attribute VB_Name = "M_Importar_AP"
+Attribute VB_Name = "M_XLS_Importar_AP"
 Sub Importar_AP()
 '
 ' Importar_AP Macro

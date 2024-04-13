@@ -1,4 +1,4 @@
-Attribute VB_Name = "Funcoes_JDE"
+Attribute VB_Name = "M_JDE_Funcoes_Gerais"
 
 
 Public driver

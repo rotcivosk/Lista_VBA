@@ -9,7 +9,7 @@ def dividir(a,b):
         raise ValueError("Dividir por 0, não, né")
     return a / b
 def potencia(a,b):
-    return a^b
+    return a**b
 
 def main():
     while True:

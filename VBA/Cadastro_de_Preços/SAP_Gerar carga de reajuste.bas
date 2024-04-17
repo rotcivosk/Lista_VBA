@@ -1,20 +1,19 @@
-Attribute VB_Name = "M_SAP_Gerar carga de reajuste"
 Sub Gerar_carga_reajuste()
         Dim n As Integer
 
     ' Selecionar a lista
-        Dim lista As Range, item_ini as Range
+        Dim lista As Range, item_ini As Range
         Set item_ini = Range("G10")
-        if item_ini.Offset(1,0) = "" Then
+        If item_ini.Offset(1, 0) = "" Then
             Set lista = item_ini
         Else
             Set lista = Range(item_ini, item_ini.End(xlDown))
-        end if 
+        End If
 
     ' Abrir SAP
-        call Abrir_SAP
+        Call Abrir_SAP
         
-    ' Abrir a transação
+    ' Abrir a transaÃ§Ã£o
     With session
         ' Abrir o ZI9
         .findById("wnd[0]/tbar[0]/okcd").Text = "/nzi9_mm_reginfo"
@@ -35,11 +34,14 @@ Sub Gerar_carga_reajuste()
         .findById("wnd[0]").sendVKey 8
         End With
 
-    ' Adiciona os valores 
+    ' Adiciona os valores
     n = 0
-    For Each cell In lista
-        session.findById("wnd[0]/usr/cntlCONT_106/shellcont/shell").modifyCell n, "ZPB0", cell.Offset(0, 1).Value
-        n = n + 1
+    For Each Cell In lista
+
+     Cell.Offset(0, 1).Value = Round(Cell.Offset(0, 1).Value, 2)
+     session.findById("wnd[0]/usr/cntlCONT_106/shellcont/shell").modifyCell n, "ZPB0", Cell.Offset(0, 1).Value
+     n = n + 1
+     
         session.findById("wnd[0]/usr/cntlCONT_106/shellcont/shell").triggerModified
         Next
         
@@ -47,6 +49,6 @@ Sub Gerar_carga_reajuste()
         session.findById("wnd[0]/usr/txtCPO_CENTRO").Text = Range("I7").Value
         session.findById("wnd[0]/usr/txtCPO_TEXT").Text = Range("H8").Value
         session.findById("wnd[0]/tbar[1]/btn[8]").press
-        item_ini.Formula = mid(session.findById("wnd[0]/sbar").Text,28,4)
+        item_ini.Offset(0, 2).Formula = Mid(session.findById("wnd[0]/sbar").Text, 28, 4)
         session.findById("wnd[0]/tbar[0]/btn[3]").press
     End Sub

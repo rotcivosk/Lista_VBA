@@ -12,8 +12,8 @@ Sub Abrir_SAP()
         Set Connection = Applic.Children(0)
         Set session = Connection.Children(0) 'Declara a Session pública como o SAP em aberto
     Else
-        'Inputs do Usuário/Senha
-        user = InputBox("Digite seu Usuário:", "Incluir User", " ")
+        'Inputs do Usuario/Senha
+        user = InputBox("Digite seu Usuario:", "Incluir User", " ")
         Senha = InputBox("Digite sua Senha:", "Incluir Senha", " ")
 
         'Abrir o arquivo SAP
@@ -33,12 +33,12 @@ Sub Abrir_SAP()
         session.findById("wnd[0]").sendVKey 0
         End If
     End Sub
-' Abrir o SAP ou usar o que já está ok
+' Abrir o SAP ou usar o que ja esta ok
 
 
 Sub exportar_clipboardSAP(Is_tabela As Boolean)
 
-    'Há duas maneiras de Exportar, uma caso seja uma tabela, outra caso seja uma transação
+    'Ha duas maneiras de Exportar, uma caso seja uma tabela, outra caso seja uma transacao
     With session
         If Is_tabela Then
             .findById("wnd[0]/usr/cntlRESULT_LIST/shellcont/shell").pressToolbarContextButton "&MB_EXPORT"

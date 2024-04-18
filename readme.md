@@ -10,9 +10,14 @@ Aqui, você encontrará uma variedade de projetos que desenvolvi, categorizados 
 # Python
 Python
 
-Projetos gerais com base em necessidades e desafios:
-- Calculadora de Sudoku
+Banco de Dados:
+- Gerenciador de contatos
 
+Lógicas de Programação:
+- Verificador de Palíndromo
+- Gerador de Senhas Aleatórias
+- Currency_exchanger (Base API)
+- Calculadora
 
 # VBA / SELENIUM / Office
 VBA (Visual Basic for Applications)
